@@ -29,6 +29,44 @@ const ItemSchema = new Schema<IItem>({
 
 const Item = mongoose.model<IItem>("Item", ItemSchema);
 
+
+/*
+const ai = new GoogleGenerativeAI(GEMINI_API_KEY);
+
+// Model priority order (highest quota first → fallback to lower quota)
+const GEMINI_MODELS = [
+    "gemini-2.5-flash-lite", // 1000 RPD
+    "gemini-2.5-flash",      // 250 RPD
+    "gemini-2.0-flash",      // 200 RPD
+    "gemini-2.5-pro"         // 100 RPD
+];
+
+let currentModelIndex = 0;
+
+/*
+//Ask gemini to fall back on 429 response
+async function askGemini(prompt: string): Promise<string> {
+    for (let i = 0; i < GEMINI_MODELS.length; i++) {
+        const modelName = GEMINI_MODELS[currentModelIndex];
+        try {
+            const model = ai.getGenerativeModel({ model: modelName });
+            const result = await model.generateContent(prompt);
+            return result.response.text();
+        } catch (err: any) {
+            // If quota exhausted, try next model
+            if (err.status === 429 || (err.message && err.message.includes("Resource exhausted"))) {
+                console.warn(`⚠️ Model ${modelName} quota exhausted. Switching to next model.`);
+                currentModelIndex = (currentModelIndex + 1) % GEMINI_MODELS.length;
+                continue;
+            }
+            // Other errors → throw immediately
+            throw err;
+        }
+    }
+    throw new Error("All Gemini models quota exhausted.");
+}
+*/
+
 // =======================
 // GEMINI SERVICE
 // =======================
